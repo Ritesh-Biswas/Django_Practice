@@ -25,11 +25,16 @@ def artcile_search_view(request):
 #Cretae Form
 def article_create_view(request):
     #print(request.POST)
-    title = request.POST.get("title")
-    content = request.POST.get("content")
-    print(title,content)
-    Article.objects.create(title=title,content=content)
     context = {}
+    if request.method == "POST":
+        title = request.POST.get("title")
+        content = request.POST.get("content")
+        print(title,content)
+        article_object = Article.objects.create(title=title,content=content)
+        context['object'] = article_object
+        context['created'] = True
+
+    
     return render(request, "articles/create.html"
     ,context=context)
     
